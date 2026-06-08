@@ -79,7 +79,6 @@
             echo "Hello, World!";
         ?>
     </div>
-
     <p>
         Текущее время:
         <?php
