@@ -1,7 +1,7 @@
 <?php
 
 namespace MyProject\Services;
-
+use MyProject\Exceptions\DbException;
 class Db
 {
     /** @var \PDO */
@@ -14,12 +14,16 @@ class Db
     {
         $dbOptions = (require __DIR__ . '/../../settings.php')['db'];
 
-        $this->pdo = new \PDO(
-            'mysql:host=' . $dbOptions['host'] . ';port=' . $dbOptions['port'] . ';dbname=' . $dbOptions['dbname'],
-            $dbOptions['user'],
-            $dbOptions['password']
-        );
-        $this->pdo->exec('SET NAMES UTF8');
+        try {
+            $this->pdo = new \PDO(
+                'mysql:host=' . $dbOptions['host'] . ';port=' . $dbOptions['port'] . ';dbname=' . $dbOptions['dbname'],
+                $dbOptions['user'],
+                $dbOptions['password']
+            );
+            $this->pdo->exec('SET NAMES UTF8');
+        } catch (\PDOException $e) {
+            throw new DbException('Ошибка при подключении к базе данных: ' . $e->getMessage());
+        }
     }
 
     public static function getInstance(): self
