@@ -2,18 +2,10 @@
 
 namespace MyProject\Controllers;
 
-use MyProject\View\View;
 use MyProject\Models\Articles\Article;
-use MyProject\Services\Db;
-class MainController
-{
-    private $view;
-    
-    public function __construct()
-    {
-        $this->view = new View(__DIR__ . '/../../../templates');
-    }
 
+class MainController extends AbstractController
+{
     public function main()
     {
         $articles = Article::findAll();
@@ -24,7 +16,7 @@ class MainController
     {
         $this->view->renderHtml('main/hello.php', [
             'name'  => $name,
-            'title' => 'Страница приветствия', 
+            'title' => 'Страница приветствия',
         ]);
     }
 
