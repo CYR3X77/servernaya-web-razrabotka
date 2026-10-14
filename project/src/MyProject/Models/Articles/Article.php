@@ -4,7 +4,7 @@ namespace MyProject\Models\Articles;
 
 use MyProject\Models\ActiveRecordEntity;
 use MyProject\Models\Users\User;
-
+use MyProject\Models\Comments\Comment;
 class Article extends ActiveRecordEntity
 {
     protected $name;
@@ -31,5 +31,10 @@ class Article extends ActiveRecordEntity
     protected static function getTableName(): string
     {
         return 'articles';
+    }
+    
+    public function getComments(): array
+    {
+        return Comment::findAllByArticleId($this->getId());
     }
 }
